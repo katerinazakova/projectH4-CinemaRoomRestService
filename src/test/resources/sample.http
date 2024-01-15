@@ -1,3 +1,0 @@
-### Zobrazit všechny sedadla v kině
-GET http://localhost:8080/seats
-Content-Type: application/json
