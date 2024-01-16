@@ -53,10 +53,7 @@ public class CinemaService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse("The number of a row or a column is out of bounds!"));
         }
-        Seats requiredSeat = cinemaSeats.stream()
-                .filter(seat -> seat.getRow() == row && seat.getColumn() == column)
-                .findFirst()
-                .orElse(null);
+        Seats requiredSeat = findRequiredSeat(row, column);
 
         if (requiredSeat != null) {
             if (requiredSeat.isAvailable()) {
@@ -71,6 +68,14 @@ public class CinemaService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse("Invalid seat coordinates!"));
         }
+    }
+
+    public Seats findRequiredSeat(int row, int column) {
+        return cinemaSeats.stream()
+                .filter(seat -> seat.getRow() == row && seat.getColumn() == column)
+                .findFirst()
+                .orElse(null);
+
     }
 
 }
