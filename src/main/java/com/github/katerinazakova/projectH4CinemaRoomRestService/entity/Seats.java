@@ -13,10 +13,14 @@ public class Seats {
     @JsonIgnore
     private boolean available = true;
 
+    public Seats () {
+
+    }
+
     public Seats(int row, int column,int price) {
         this.row = row;
         this.column = column;
         this.price = price;
-
     }
+
 }

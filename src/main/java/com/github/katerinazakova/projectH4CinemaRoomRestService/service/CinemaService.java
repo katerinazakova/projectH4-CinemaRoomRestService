@@ -3,15 +3,13 @@ package com.github.katerinazakova.projectH4CinemaRoomRestService.service;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.ErrorResponse;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.Seats;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CinemaService {
@@ -20,22 +18,24 @@ public class CinemaService {
     private static final int COLUMNS = 9;
     private final List<Seats> cinemaSeats;
 
-    public CinemaService() {
+    private final List <Ticket> purchaseTicket;
+
+    public CinemaService(List <Ticket> purchaseTicket) {
         this.cinemaSeats = createPlanOfCinemaSeats();
+        this.purchaseTicket = purchaseTicket;
     }
 
-    public List<Seats> createPlanOfCinemaSeats() {
+    private List<Seats> createPlanOfCinemaSeats() {
         List<Seats> listOfSeats = new ArrayList<>();
-        for (int row = 1; row <= ROWS; row++) {
-            for (int column = 1; column <= COLUMNS; column++) {
-                Seats seat = new Seats(row, column, row <= 4 ? 10 : 8);
+        for (int i = 1; i <= ROWS; i++) {
+            for (int j = 1; j <= COLUMNS; j++) {
+                Seats seat = new Seats(i, j, i <= 4 ? 10 : 8);
                 listOfSeats.add(seat);
             }
         }
         return listOfSeats;
     }
 
-    @JsonProperty("seatsInfo")
     public Map<String, Object> getCinemaInfo() {
         Map<String, Object> cinemaInfo = new HashMap<>();
         cinemaInfo.put("rows", ROWS);
@@ -44,22 +44,19 @@ public class CinemaService {
         return cinemaInfo;
     }
 
-    public static boolean isNotValidSizeOfCinema(int row, int column) {
-        return row > ROWS || column > COLUMNS || row <= 0 || column <= 0;
-    }
-
-    public ResponseEntity<Object> buyTicket(int row, int column) {
-        if (isNotValidSizeOfCinema(row, column)) {
+    public ResponseEntity<Object> bookingTicket(int row, int column) {
+        if (row > ROWS || column > COLUMNS || row <= 0 || column <= 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse("The number of a row or a column is out of bounds!"));
         }
         Seats requiredSeat = findRequiredSeat(row, column);
-
         if (requiredSeat != null) {
             if (requiredSeat.isAvailable()) {
                 requiredSeat.setAvailable(false);
+                Ticket ticket = new Ticket (UUID.randomUUID().toString(),requiredSeat);
+                purchaseTicket.add(ticket);
                 return ResponseEntity.status(HttpStatus.OK)
-                        .body(requiredSeat);
+                        .body(ticket);
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new ErrorResponse("The ticket has been already purchased!"));
@@ -75,6 +72,34 @@ public class CinemaService {
                 .filter(seat -> seat.getRow() == row && seat.getColumn() == column)
                 .findFirst()
                 .orElse(null);
+
+    }
+
+    public Ticket findPurchaseTicket (String token) {
+        return purchaseTicket.stream ()
+                .filter(ticket -> ticket.getToken().equals(token))
+                .findFirst()
+                .orElse(null);
+    }
+
+
+    public ResponseEntity<Object> refundOfPurchaseTicket (String token) {
+        Ticket ticketWithToken = findPurchaseTicket(token);
+
+        if (ticketWithToken != null){
+            Seats availabilityOfSeat = findRequiredSeat(ticketWithToken.getTicket().getRow(), ticketWithToken.getTicket().getColumn());
+            availabilityOfSeat.setAvailable(true);
+            Map<String,Object> refundTicket = new HashMap<>();
+            refundTicket.put("ticket",ticketWithToken.getTicket());
+            purchaseTicket.remove(ticketWithToken);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(refundTicket);
+
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse("Wrong token!"));
+        }
 
     }
 
