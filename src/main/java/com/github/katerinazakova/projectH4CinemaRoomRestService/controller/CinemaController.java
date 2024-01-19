@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class CinemaController {
@@ -32,5 +33,12 @@ public class CinemaController {
     @PostMapping ("/return")
     public ResponseEntity<Object> refundTicket (@RequestBody Ticket ticket){
         return cinemaService.refundOfPurchaseTicket(ticket.getToken());
+    }
+
+    @GetMapping ("/stats")
+    public ResponseEntity<Object> viewStatisticsOfCinema(@RequestParam (required = false) String password){
+
+        return cinemaService.viewStatistics(password);
+
     }
 }
