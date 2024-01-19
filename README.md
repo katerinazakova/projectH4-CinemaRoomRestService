@@ -27,11 +27,55 @@ If the seat is taken, respond with a 400 (Bad Request) status code. The response
     "error": "The ticket has been already purchased!"
 }
 
-
-If users pass a wrong row/column number, respond with a 400 status code and the following line:
+## 3. stage:
+Change the JSON response when a customer purchases a ticket by making a POST request to the /purchase endpoint.
 
 {
-    "error": "The number of a row or a column is out of bounds!"
+    "token": "00ae15f2-1ab6-4a02-a01f-07810b42c0ee",
+    "ticket": {
+        "row": 1,
+        "column": 1,
+        "price": 10
+    }
 }
 
+Implement the /return endpoint, which will handle POST requests and allow customers to refund their tickets.
+
+The request should have the token feature that identifies the ticket in the request body. Once you have the token, you need to identify the ticket it relates to and mark it as available.The response body should be as follows:
+
+{
+    "ticket": {
+        "row": 1,
+        "column": 1,
+        "price": 10
+    }
+}
+
+The ticket should contain the information about the returned ticket.
+
+If you cannot identify the ticket by the token, make your program respond with a 400 status code and the following response body: {"error": "Wrong token!"}
+
+If users pass a wrong row/column number, respond with a 400 status code and the following line: { "error": "The number of a row or a column is out of bounds!"}
+
 Show the ticket price when the /seats endpoint is accessed. 
+
+## 4. stage
+Implement the /stats endpoint that will handle GET requests with URL parameters. If the URL parameters contain a password key with a super_secret value, return the movie theatre statistics in the following format:
+
+{
+    "income": 0,
+    "available": 81,
+    "purchased": 0
+}
+Take a look at the description of keys:
+
+income — shows the total income of sold tickets.
+available — shows how many seats are available.
+purchased — shows how many tickets were purchased.
+If the parameters don't contain a password key or a wrong value has been passed, respond with a 401 status code. The response body should contain the following:
+
+{
+    "error": "The password is wrong!"
+}
+
+Project from Hyperskill: https://hyperskill.org/
