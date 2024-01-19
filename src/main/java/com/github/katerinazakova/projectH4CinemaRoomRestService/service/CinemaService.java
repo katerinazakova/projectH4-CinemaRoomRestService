@@ -3,6 +3,7 @@ package com.github.katerinazakova.projectH4CinemaRoomRestService.service;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.ErrorResponse;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.Seats;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.Statistics;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class CinemaService {
     private static final int COLUMNS = 9;
     private final List<Seats> cinemaSeats;
 
-    private final List <Ticket> purchaseTicket;
+    public final List <Ticket> purchaseTicket;
 
     public CinemaService(List <Ticket> purchaseTicket) {
         this.cinemaSeats = createPlanOfCinemaSeats();
@@ -102,5 +103,17 @@ public class CinemaService {
         }
 
     }
+
+    public ResponseEntity<Object> viewStatistics(String password) {
+        if (password != null && password.equals("super_secret")) {
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new Statistics(purchaseTicket));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ErrorResponse("The password is wrong!"));
+        }
+    }
+
 
 }
