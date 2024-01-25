@@ -1,11 +1,7 @@
 package com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.controller;
 
 import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.CinemaSeats;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.ErrorResponse;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.cinemaExceptionHandling.InvalidSeatCoordinatesException;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.cinemaExceptionHandling.PurchaseTicketException;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.cinemaExceptionHandling.UnauthorizedException;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.cinemaExceptionHandling.WrongTokenException;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.exceptionHandling.*;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.service.CinemaService;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.CinemaTicket;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,41 +28,20 @@ public class CinemaController {
 
     @PostMapping("/purchase")
     public ResponseEntity<Object> purchaseCinemaTicket(@RequestBody CinemaSeats seats) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(cinemaService.purchaseTicket(seats.getRow(), seats.getColumn()));
-
-        } catch (PurchaseTicketException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponse("The ticket has been already purchased!"));
-
-        } catch (InvalidSeatCoordinatesException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponse("Invalid seat coordinates!"));
-        }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(cinemaService.purchaseTicket(seats.getRow(), seats.getColumn()));
     }
 
     @PostMapping("/return")
     public ResponseEntity<Object> refundPurchaseCinemaTicket(@RequestBody CinemaTicket cinemaTicket) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(cinemaService.refundPurchaseTicket(cinemaTicket.getToken()));
-
-        } catch (WrongTokenException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponse("Token is wrong!"));
-        }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(cinemaService.refundPurchaseTicket(cinemaTicket.getToken()));
     }
 
     @GetMapping("/stats")
     public ResponseEntity<Object> viewStatisticsOfCinema(@RequestParam(required = false) String password) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(cinemaService.viewStatistics(password));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(cinemaService.viewStatistics(password));
 
-        } catch (UnauthorizedException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new ErrorResponse("Password is wrong!"));
-        }
     }
 }

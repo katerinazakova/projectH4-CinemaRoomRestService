@@ -3,10 +3,8 @@ package com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.service;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.CinemaTicket;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.CinemaSeats;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.CinemaStatistics;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.cinemaExceptionHandling.InvalidSeatCoordinatesException;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.cinemaExceptionHandling.PurchaseTicketException;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.cinemaExceptionHandling.UnauthorizedException;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.cinemaExceptionHandling.WrongTokenException;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.exceptionHandling.CustomBadRequestException;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.exceptionHandling.CustomUnauthorizedException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -53,17 +51,17 @@ public class CinemaService {
                 purchaseCinemaTicket.add(cinemaTicket);
                 return cinemaTicket;
             }
-            throw new PurchaseTicketException("The ticket has been already purchased!");
+            throw new CustomBadRequestException("The ticket has been already purchased!");
         }
-        throw new InvalidSeatCoordinatesException("Invalid seat coordinates!");
+        throw new CustomBadRequestException("Invalid seat coordinates!");
     }
 
 
     public CinemaSeats findRequiredSeat(int row, int column) {
-           return cinemaSeats.stream()
-                   .filter(seat -> seat.getRow() == row && seat.getColumn() == column)
-                   .findFirst()
-                   .orElse(null);
+        return cinemaSeats.stream()
+                .filter(seat -> seat.getRow() == row && seat.getColumn() == column)
+                .findFirst()
+                .orElse(null);
     }
 
     public CinemaTicket findPurchaseTicket(String token) {
@@ -85,7 +83,7 @@ public class CinemaService {
             purchaseCinemaTicket.remove(cinemaTicketWithToken);
             return refundTicket;
         }
-        throw new WrongTokenException("Token is wrong");
+        throw new CustomBadRequestException("Token is wrong!");
 
     }
 
@@ -93,6 +91,6 @@ public class CinemaService {
         if ("super_secret".equals(password)) {
             return (new CinemaStatistics(purchaseCinemaTicket));
         }
-        throw new UnauthorizedException("Password is wrong!");
+        throw new CustomUnauthorizedException("Password is wrong!");
     }
 }
