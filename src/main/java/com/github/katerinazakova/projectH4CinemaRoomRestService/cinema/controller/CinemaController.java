@@ -4,6 +4,7 @@ import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.Ci
 import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.exceptionHandling.*;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.service.CinemaService;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.CinemaTicket;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 public class CinemaController {
 
     private final CinemaService cinemaService;
-
-    @Autowired
-    public CinemaController(CinemaService cinemaService) {
-        this.cinemaService = cinemaService;
-    }
 
     @GetMapping("/seats")
     public Map<String, Object> viewCinemaInformation() {
