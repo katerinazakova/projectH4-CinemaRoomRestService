@@ -1,6 +1,5 @@
-package com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity;
+package com.github.katerinazakova.projectH4CinemaRoomRestService.entity;
 
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.service.CinemaService;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,10 +43,6 @@ public class CinemaStatistics {
     public int calculateTotalIncomeOfCinema (List <CinemaTicket> purchaseCinemaTicket){
         return findNumberOfPurchaseTicketsOfPrice10(purchaseCinemaTicket) * 10 + findNumberOfPurchaseTicketsOfPrice8(purchaseCinemaTicket) * 8;
     }
-
-
-
-
 
 
 

@@ -1,4 +1,4 @@
-package com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity;
+package com.github.katerinazakova.projectH4CinemaRoomRestService.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

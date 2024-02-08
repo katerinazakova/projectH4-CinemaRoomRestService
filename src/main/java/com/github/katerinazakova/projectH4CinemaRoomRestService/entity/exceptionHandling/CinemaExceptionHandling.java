@@ -1,4 +1,4 @@
-package com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.exceptionHandling;
+package com.github.katerinazakova.projectH4CinemaRoomRestService.entity.exceptionHandling;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

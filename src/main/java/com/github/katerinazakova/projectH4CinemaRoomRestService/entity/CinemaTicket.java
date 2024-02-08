@@ -1,4 +1,4 @@
-package com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity;
+package com.github.katerinazakova.projectH4CinemaRoomRestService.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

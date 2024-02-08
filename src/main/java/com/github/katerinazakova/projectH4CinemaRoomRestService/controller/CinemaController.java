@@ -1,11 +1,9 @@
-package com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.controller;
+package com.github.katerinazakova.projectH4CinemaRoomRestService.controller;
 
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.CinemaSeats;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.exceptionHandling.*;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.service.CinemaService;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.CinemaTicket;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.CinemaSeats;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.service.CinemaService;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.CinemaTicket;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

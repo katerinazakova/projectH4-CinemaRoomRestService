@@ -1,10 +1,10 @@
-package com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.service;
+package com.github.katerinazakova.projectH4CinemaRoomRestService.service;
 
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.CinemaTicket;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.CinemaSeats;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.CinemaStatistics;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.exceptionHandling.CustomBadRequestException;
-import com.github.katerinazakova.projectH4CinemaRoomRestService.cinema.entity.exceptionHandling.CustomUnauthorizedException;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.CinemaTicket;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.CinemaSeats;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.CinemaStatistics;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.exceptionHandling.CustomBadRequestException;
+import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.exceptionHandling.CustomUnauthorizedException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
