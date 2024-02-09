@@ -54,6 +54,7 @@ public class CinemaService {
             throw new CustomBadRequestException("The ticket has been already purchased!");
         }
         throw new CustomBadRequestException("Invalid seat coordinates!");
+
     }
 
 
@@ -76,7 +77,8 @@ public class CinemaService {
         CinemaTicket cinemaTicketWithToken = findPurchaseTicket(token);
 
         if (cinemaTicketWithToken != null) {
-            CinemaSeats availabilityOfSeat = findRequiredSeat(cinemaTicketWithToken.getTicket().getRow(), cinemaTicketWithToken.getTicket().getColumn());
+            CinemaSeats availabilityOfSeat = findRequiredSeat(cinemaTicketWithToken.getTicket().getRow(),
+                    cinemaTicketWithToken.getTicket().getColumn());
             availabilityOfSeat.setAvailable(true);
             Map<String, Object> refundTicket = new HashMap<>();
             refundTicket.put("ticket", cinemaTicketWithToken.getTicket());
