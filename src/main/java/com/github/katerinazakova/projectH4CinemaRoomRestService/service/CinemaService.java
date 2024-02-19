@@ -5,23 +5,18 @@ import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.CinemaSea
 import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.CinemaStatistics;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.exceptionHandling.CustomBadRequestException;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.exceptionHandling.CustomUnauthorizedException;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@NoArgsConstructor
 public class CinemaService {
-
     private static final int ROWS = 9;
     private static final int COLUMNS = 9;
-    private final List<CinemaSeats> cinemaSeats;
-
-    private final List<CinemaTicket> purchaseCinemaTicket;
-
-    public CinemaService(List<CinemaTicket> purchaseCinemaTicket) {
-        this.cinemaSeats = createPlanOfCinemaSeats();
-        this.purchaseCinemaTicket = purchaseCinemaTicket;
-    }
+    private final List<CinemaSeats> cinemaSeats = createPlanOfCinemaSeats();
+    private final List<CinemaTicket> purchaseCinemaTicket = new ArrayList<>();
 
     private List<CinemaSeats> createPlanOfCinemaSeats() {
         List<CinemaSeats> listOfSeats = new ArrayList<>();
@@ -57,7 +52,6 @@ public class CinemaService {
 
     }
 
-
     public CinemaSeats findRequiredSeat(int row, int column) {
         return cinemaSeats.stream()
                 .filter(seat -> seat.getRow() == row && seat.getColumn() == column)
@@ -71,7 +65,6 @@ public class CinemaService {
                 .findFirst()
                 .orElse(null);
     }
-
 
     public Map<String, Object> refundPurchaseTicket(String token) {
         CinemaTicket cinemaTicketWithToken = findPurchaseTicket(token);

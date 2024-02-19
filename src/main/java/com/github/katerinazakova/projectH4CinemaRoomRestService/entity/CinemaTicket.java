@@ -8,8 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class CinemaTicket {
-
-        private String token;
-        private CinemaSeats ticket;
-
+    private String token;
+    private CinemaSeats ticket;
 }

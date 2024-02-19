@@ -12,19 +12,15 @@ import java.util.InputMismatchException;
 public class CinemaExceptionHandling extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({CustomBadRequestException.class})
-
     public ResponseEntity<ErrorResponse> cinemaExceptionResponseBadRequest(CustomBadRequestException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(e.getMessage()));
     }
 
-
     @ExceptionHandler({CustomUnauthorizedException.class})
-
     public ResponseEntity<ErrorResponse> cinemaExceptionResponseUnauthorized(CustomUnauthorizedException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new ErrorResponse(e.getMessage()));
     }
-
 
 }

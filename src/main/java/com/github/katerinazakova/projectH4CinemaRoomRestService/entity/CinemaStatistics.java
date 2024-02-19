@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+
 @Getter
 @Setter
 public class CinemaStatistics {
@@ -17,33 +18,29 @@ public class CinemaStatistics {
         this.purchased = calculateTotalCountOfPurchaseTickets(purchaseCinemaTicket);
     }
 
-
-    public int calculateTotalCountOfPurchaseTickets (List <CinemaTicket> purchaseCinemaTicket){
+    public int calculateTotalCountOfPurchaseTickets(List<CinemaTicket> purchaseCinemaTicket) {
         return purchaseCinemaTicket.size();
 
     }
 
-    public int viewNumberOfAvailableTickets(List <CinemaTicket> purchaseCinemaTicket){
+    public int viewNumberOfAvailableTickets(List<CinemaTicket> purchaseCinemaTicket) {
         int totalSeatsOfCinema = 81;
         return totalSeatsOfCinema - calculateTotalCountOfPurchaseTickets(purchaseCinemaTicket);
     }
 
-    public int findNumberOfPurchaseTicketsOfPrice10(List <CinemaTicket> purchaseCinemaTicket){
+    public int findNumberOfPurchaseTicketsOfPrice10(List<CinemaTicket> purchaseCinemaTicket) {
         return ((int) purchaseCinemaTicket.stream()
                 .filter(cinemaTicket -> cinemaTicket.getTicket().getRow() <= 4)
                 .count());
     }
 
-    public int findNumberOfPurchaseTicketsOfPrice8(List <CinemaTicket> purchaseCinemaTicket){
+    public int findNumberOfPurchaseTicketsOfPrice8(List<CinemaTicket> purchaseCinemaTicket) {
         return ((int) purchaseCinemaTicket.stream()
                 .filter(cinemaTicket -> cinemaTicket.getTicket().getRow() > 4)
                 .count());
     }
 
-    public int calculateTotalIncomeOfCinema (List <CinemaTicket> purchaseCinemaTicket){
+    public int calculateTotalIncomeOfCinema(List<CinemaTicket> purchaseCinemaTicket) {
         return findNumberOfPurchaseTicketsOfPrice10(purchaseCinemaTicket) * 10 + findNumberOfPurchaseTicketsOfPrice8(purchaseCinemaTicket) * 8;
     }
-
-
-
 }

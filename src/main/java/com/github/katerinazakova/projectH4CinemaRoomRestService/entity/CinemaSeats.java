@@ -18,5 +18,4 @@ public class CinemaSeats {
         this.column = column;
         this.price = price;
     }
-
 }
