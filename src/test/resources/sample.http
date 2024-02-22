@@ -1,0 +1,25 @@
+### Plan of seats of the cinema
+GET http://localhost:8080/seats
+Content-Type: application/json
+
+### Purchase of the cinema ticket
+POST http://localhost:8080/purchase
+Content-Type: application/json
+
+{ "row":1,
+  "column": 4
+
+}
+
+### Return of the cinema ticket
+POST http://localhost:8080/return
+Content-Type: application/json
+
+{ "token": "1c5fdd3f-6dcc-474f-b36e-5134512a3c77"
+
+}
+
+
+### Statistics of the cinema
+GET http://localhost:8080/stats?password=super_secret
+Content-Type: application/json

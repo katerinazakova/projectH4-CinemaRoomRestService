@@ -5,6 +5,7 @@ import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.CinemaSea
 import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.CinemaStatistics;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.exceptionHandling.CustomBadRequestException;
 import com.github.katerinazakova.projectH4CinemaRoomRestService.entity.exceptionHandling.CustomUnauthorizedException;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.*;
 
 @Service
 @NoArgsConstructor
+@Getter
 public class CinemaService {
     private static final int ROWS = 9;
     private static final int COLUMNS = 9;
